@@ -4,7 +4,9 @@ package org.emrage.hideandSeek;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.TimeUnit;
@@ -12,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class Timer {
 
     private final Main plugin;
+    private final NamespacedKey key = new NamespacedKey("spectator", "exclude");
     private int timerSeconds;
     private boolean isPaused;
     private double gradientOffset = 0.0;
@@ -70,7 +73,9 @@ public class Timer {
         if (isPaused || timerSeconds <= 0) {
             Component idleText = miniMessage.deserialize("<gold><italic>Idle</italic></gold>");
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendActionBar(idleText);
+                if (!player.getPersistentDataContainer().has(key, PersistentDataType.BYTE)) {
+                    player.sendActionBar(idleText);
+                }
             }
         } else {
             int days = (int) TimeUnit.SECONDS.toDays(timerSeconds);
@@ -96,7 +101,9 @@ public class Timer {
             Component timerText = miniMessage.deserialize(gradientTag);
 
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendActionBar(timerText);
+                if (!player.getPersistentDataContainer().has(key, PersistentDataType.BYTE)) {
+                    player.sendActionBar(timerText);
+                }
             }
         }
     }
