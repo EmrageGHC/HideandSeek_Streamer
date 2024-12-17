@@ -3,3 +3,7 @@ version: '1.0-SNAPSHOT'
 main: org.emrage.hideandSeek.Main
 api-version: '1.21'
 authors: [ EmrageGHC ]
+commands:
+  start:
+  map:
+  mode:
