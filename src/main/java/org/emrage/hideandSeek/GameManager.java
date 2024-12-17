@@ -96,7 +96,7 @@ public class GameManager {
     }
 
     public void handleEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player && gameStarted) {
             Player damager = (Player) event.getDamager();
             Player damaged = (Player) event.getEntity();
 
